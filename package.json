@@ -1,0 +1,25 @@
+{
+  "name": "cue-usb-vault-prototype",
+  "version": "0.1.0",
+  "description": "Offline cross-platform encrypted USB vault prototype",
+  "main": "src/vault-core.js",
+  "scripts": {
+    "build:standalone": "node scripts/build-standalone.js",
+    "test": "node test/vault-core.test.cjs",
+    "test:browser": "node test/browser-smoke.cjs"
+  },
+  "keywords": [
+    "offline",
+    "vault",
+    "encryption"
+  ],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "jszip": "^3.10.2"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.65.1"
+  }
+}

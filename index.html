@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d1b2a">
+  <meta name="description" content="نموذج محلي لخزنة ملفات مشفرة تعمل على Windows وAndroid">
+  <title>خزنة Cue — نموذج تجريبي</title>
+  <style>/*__CUEVAULT_CSS__*/</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark" aria-hidden="true">C</div>
+    <div><p class="eyebrow">نموذج محلي تجريبي</p><h1>خزنة Cue</h1></div>
+    <span class="offline-pill"><span class="dot"></span> دون اتصال</span>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="intro-title">
+      <p class="eyebrow">ملف واحد · حماية بكلمة مرور</p>
+      <h2 id="intro-title">ملفاتك تبقى على جهازك</h2>
+      <p>حوّل ملفاتك إلى خزنة مشفّرة تحفظها على USB، ثم افتحها يدويًا على Windows أو Android. لا يوجد تشغيل تلقائي عند إدخال USB.</p>
+      <div class="privacy-note"><span aria-hidden="true">●</span><span>التشفير وفكّه يتمان محليًا في المتصفح. لا نرفع الملفات إلى الإنترنت.</span></div>
+    </section>
+
+    <div class="tabs" role="tablist" aria-label="إجراءات الخزنة">
+      <button class="tab" id="tab-create" role="tab" aria-selected="true" aria-controls="panel-create" data-tab="create">إنشاء خزنة</button>
+      <button class="tab" id="tab-open" role="tab" aria-selected="false" aria-controls="panel-open" data-tab="open" tabindex="-1">فتح خزنة</button>
+    </div>
+
+    <section class="panel" id="panel-create" role="tabpanel" aria-labelledby="tab-create" data-panel="create">
+      <div class="section-heading"><span class="step">١</span><div><h3>اختر الملفات</h3><p>حد تجريبي: 200 ملف وبإجمالي لا يتجاوز 40 ميبيبايت.</p></div></div>
+      <label class="file-picker" for="create-files"><span class="picker-icon" aria-hidden="true">＋</span><span><strong>اختيار ملفات من الجهاز أو USB</strong><small>يمكن اختيار أكثر من ملف</small></span></label>
+      <input id="create-files" type="file" multiple>
+      <p id="selected-summary" class="summary" aria-live="polite"></p>
+      <ul id="chosen-files" class="chosen-files" aria-live="polite">لم تُحدد ملفات بعد.</ul>
+
+      <div class="section-heading password-heading"><span class="step">٢</span><div><h3>عيّن كلمة مرور</h3><p>10 أحرف على الأقل؛ يفضّل 12 أو أكثر. لا يمكن استعادتها إذا فُقدت.</p></div></div>
+      <div class="field-grid">
+        <label class="field"><span>كلمة المرور</span><input id="create-password" type="password" minlength="10" autocomplete="new-password" placeholder="اكتب كلمة مرور قوية" dir="auto"></label>
+        <label class="field"><span>تأكيد كلمة المرور</span><input id="confirm-password" type="password" minlength="10" autocomplete="new-password" placeholder="أعد كتابتها" dir="auto"></label>
+      </div>
+      <div class="actions"><button id="create-button" class="button primary" type="button">إنشاء ملف الخزنة</button><button id="create-reset" class="button quiet" type="button">مسح الاختيارات</button></div>
+      <p id="create-status" class="status" role="status" aria-live="polite" hidden></p>
+      <aside class="caution"><strong>مهم:</strong> تنزيل الخزنة لا ينقلها تلقائيًا إلى USB. احفظ ملف <code>.cuevault</code> على USB عبر مدير الملفات، واحتفظ بنسخة احتياطية. لا تحفظ كلمة المرور على الخزنة نفسها.</aside>
+    </section>
+
+    <section class="panel" id="panel-open" role="tabpanel" aria-labelledby="tab-open" data-panel="open" hidden>
+      <div id="open-form">
+        <div class="section-heading"><span class="step">١</span><div><h3>اختر ملف الخزنة</h3><p>على Android استخدم منتقي الملفات، ثم اختر USB من القائمة إذا كان موصولًا.</p></div></div>
+        <label class="file-picker" for="open-vault-file"><span class="picker-icon" aria-hidden="true">↥</span><span><strong>اختيار ملف .cuevault</strong><small>من USB أو من ذاكرة الجهاز</small></span></label>
+        <input id="open-vault-file" type="file" accept=".cuevault,application/octet-stream">
+        <p id="vault-file-name" class="summary">لم يُحدد ملف خزنة بعد.</p>
+        <div class="section-heading password-heading"><span class="step">٢</span><div><h3>أدخل كلمة المرور</h3><p>يُفتح الملف بعد نجاح التحقق من كلمة المرور وسلامة البيانات.</p></div></div>
+        <label class="field"><span>كلمة المرور</span><input id="open-password" type="password" autocomplete="current-password" placeholder="كلمة المرور المستخدمة عند الإنشاء" dir="auto"></label>
+        <div class="actions"><button id="open-button" class="button primary" type="button" disabled>فتح الخزنة</button></div>
+        <p id="open-status" class="status" role="status" aria-live="polite" hidden></p>
+      </div>
+      <div id="opened-panel" hidden>
+        <div class="opened-header"><div><p class="eyebrow">خزنة مفتوحة</p><h3 id="opened-title"></h3><p id="opened-summary" class="summary"></p></div><button id="close-vault-button" class="button quiet" type="button">إغلاق الخزنة</button></div>
+        <p class="export-note">نزّل الملفات التي تحتاجها واحدةً تلو الأخرى. سيحفظ المتصفح الملفات المنزّلة في وجهته المعتادة؛ انقلها إلى USB عند الحاجة.</p>
+        <div id="vault-files" class="vault-files" aria-live="polite"></div>
+        <p id="main-status" class="status" role="status" aria-live="polite" hidden></p>
+      </div>
+    </section>
+
+    <section class="limits" aria-label="معلومات مهمة">
+      <h3>قبل الاستخدام</h3>
+      <ul>
+        <li>هذه نسخة تجريبية للملفات الصغيرة والمتوسطة، وليست مراجعة أمنية معتمدة.</li>
+        <li>الملفات المفكوكة تظهر على الجهاز وتُنزّل غير مشفّرة عند التصدير.</li>
+        <li>أغلق الخزنة عند الانتهاء، ولا تستخدم جهازًا عامًا أو مصابًا ببرمجيات خبيثة.</li>
+        <li>قد يظهر حجم ملف الخزنة، ولا يحمي التشفير من تلف USB أو فقدانه.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>خزنة Cue · تنسيق ملف تجريبي VLT1 · يعمل دون مكتبات أو خدمات شبكية خارجية</footer>
+
+  <script>/*__CUEVAULT_JSZIP__*/</script>
+  <script>/*__CUEVAULT_CORE__*/</script>
+  <script>/*__CUEVAULT_APP__*/</script>
+</body>
+</html>
